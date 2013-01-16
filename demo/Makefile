@@ -30,6 +30,8 @@ SRC_CHS_UTILS   := $(UTILS).chs
 DRV_HS_UTILS    := $(BUILD_PREFIX)$(UTILS).hs
 
 ## Actual rules
+all: $(RULER_DEMO_EXEC)
+
 $(DRV_AG_MAIN): $(SRC_CAG_MAIN)
 	@mkdir -p $(@D)
 	$(SHUFFLE) --gen-reqm=$(SHUFFLE_FINAL) --ag --variant-order="$(SHUFFLE_ORDER)" --base=Main --preamble=no --lhs2tex=no $< > $@

@@ -12,6 +12,14 @@ Maintainer:          uhc-developers@lists.science.uu.nl
 Category:            Development
 Build-Type:          Custom
 Cabal-Version:       >= 1.8
+Extra-Source-Files:  demo/RulerDemoUtils.chs
+                     demo/RulerDemoMain.cag
+                     demo/rulerDemoRL.crl2
+                     demo/Makefile
+                     demo/tst1
+                     demo/tst2
+                     demo/tst3
+                     demo/tst5
 
 Source-Repository head
   Type:              git

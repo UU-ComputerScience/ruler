@@ -4,6 +4,8 @@
 -------------------------------------------------------------------------
 
 %%[1 hs module (Version)
+import Paths_ruler (version)
+import Data.Version (showVersion)
 %%]
 
 %%[1 hs export (versionInfo, versionDist, versionSvn)
@@ -15,10 +17,7 @@
 
 %%[1 hs
 versionSvn      = "$Id$"
-versionMajor    = "0"
-versionMinor    = "04"
-versionQuality  = "alpha"
-versionDist     = versionMajor ++ "." ++ versionMinor ++ versionQuality
+versionDist     = showVersion version
 versionProg     = "ruler"
 versionInfo     = versionProg ++ "(" ++ versionDist ++ ")" ++ ", " ++ versionSvn
 %%]

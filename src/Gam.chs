@@ -278,7 +278,7 @@ ppGam = ppListSepV "[" "]" "," . map (\(k,v) -> pp k >#< ":->" >#< pp v) . gamAs
 ppGam :: (PP k, PP v) => Gam k v -> PP_Doc
 ppGam
   = ppl . map (ppl . map (\(k,v) -> pp k >#< ":->" >#< pp v)) . gamAssocs'
-  where ppl = ppListSepV "[" "]" ","
+  where ppl = ppBlockWithStringsH "[" "]" ","
 
 ppGam' :: (PP k, PP v) => Gam k v -> PP_Doc
 ppGam' = vlist . map (\(k,v) -> pp k >#< ":->" >#< pp v) . gamAssocs

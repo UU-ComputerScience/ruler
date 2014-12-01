@@ -166,8 +166,8 @@ SEM DataAGFlds
 %%[1 ag
 SEM RlDecl
   | LTX             lhs     .   pp          =   let r = "\\" >|< (pcRule @lhs.ppCfg) >|< ppCurly @rlNm >|< ppCurly @vwNm
-                                                        >-< ppListSepVV "{%" "}" "\\\\" @preJds.ppL
-                                                        >-< ppListSepVV "{%" "}" "\\\\" @postJds.ppL
+                                                        >-< ppBlockWithStrings "{%" "}" "\\\\" @preJds.ppL
+                                                        >-< ppBlockWithStrings "{%" "}" "\\\\" @postJds.ppL
                                                 in  mkTexCmdDef (pcDef @lhs.ppCfg) @nm r
   | LTXAlias        lhs     .   pp          =   mkTexCmdDef (pcDef @lhs.ppCfg) @fullAliasNm (mkTexCmdUse (pcUse @lhs.ppCfg) @fullNm)
 

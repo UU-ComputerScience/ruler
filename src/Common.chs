@@ -81,8 +81,10 @@ instance PP ExprIsRw where
 -- PP instances
 -------------------------------------------------------------------------
 
+{-
 instance (PP a,PP b) => PP (a,b) where
   pp (a,b) = pp a >#< ":" >#< pp b
+-}
 
 -------------------------------------------------------------------------
 -- Kind of Expr wrappers (for influencing latex pretty printing, colors)

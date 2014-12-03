@@ -177,7 +177,7 @@ SEM VwDecl
   | LTX             lhs     .   pp          =   let meta = ensureTeXMath $ switchLaTeXLhs $ exprFmtTeX @lhs.opts @lhs.fmGam @scmExpr.self
                                                 in  mkTexCmdDef (pcDef @lhs.ppCfg) @scMetaNm meta >-< @rlDecls.pp
   | LTXFig          lhs     .   pp          =   let fig = "\\begin" >|< ppCurly (pcFigEnv @lhs.ppCfg) >|< ppCurly (mkTexCmdUse (pcUse @lhs.ppCfg) @scMetaNm) >|< ppCurly (pp @descr) >|< ppCurly @fullNm >|< (ppCurly @nm)
-                                                          >-< vlist (intersperse (pp "\\hspace{1ex}") . map (mkTexCmdUse (pcUse @lhs.ppCfg)) $ @rlFullNmL)
+                                                          >-< vlist (intersperse (pp "\\hspace{1ex}") . map (ensureTeXMath . mkTexCmdUse (pcUse @lhs.ppCfg)) $ @rlFullNmL)
                                                           >-< "\\end" >|< ppCurly (pcFigEnv @lhs.ppCfg)
                                                 in  mkTexCmdDef (pcDef @lhs.ppCfg) @fullNm fig
 

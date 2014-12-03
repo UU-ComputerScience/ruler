@@ -1,5 +1,5 @@
 Name:                ruler
-Version:             0.4.0.1
+Version:             0.4.0.2
 Copyright:           Utrecht University, Department of Information and Computing Sciences, Software Technology group
 Description:         Ruler tool used by UHC (Utrecht Haskell Compiler)
 Synopsis:            Ruler tool for UHC

@@ -274,7 +274,7 @@ main
                  }
          else compileTopLevel (if null n then emptyFPath else mkFPath (head n)) opts
        }
-  where optErrs o = catMaybes $ map (uncurry extr) [("selrule", fmap snd . optMbRlSel')]
+  where optErrs o = catMaybes $ map (uncurry extr) [("selrule", fmap snd . optMbRlSel'), ("markchanges", fmap snd . optMbMarkChange')]
           where extr msg fld = do
                   e <- fld o
                   if null e then Nothing else return $ do 

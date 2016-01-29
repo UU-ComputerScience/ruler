@@ -32,7 +32,7 @@ data Opts
       , optSvnVersion   :: Bool
       , optFragWrap     :: Bool
       , optAGCopyElim   :: Bool
-      , optMbMarkChange :: Maybe ViewSels
+      , optMbMarkChange':: Maybe (ViewSels,[Err])
       , optMbRlSel'     :: Maybe (RlSel,[Err])
       , optBaseNm       :: String
       , optSearchPath   :: [String]
@@ -59,7 +59,7 @@ defaultOpts
       , optSvnVersion   =  False
       , optFragWrap     =  False
       , optAGCopyElim   =  True
-      , optMbMarkChange =  Nothing
+      , optMbMarkChange'=  Nothing
       , optMbRlSel'     =  Nothing
       , optBaseNm       =  rulesCmdPre
       , optSearchPath   =  []
@@ -67,8 +67,9 @@ defaultOpts
       }
 %%]
 
-%%[1 hs export(optMbRlSel)
+%%[1 hs export(optMbRlSel, optMbMarkChange)
 optMbRlSel = fmap fst . optMbRlSel'
+optMbMarkChange = fmap fst . optMbMarkChange'
 %%]
 
 %%[1 hs export(cmdLineOpts)
@@ -146,13 +147,14 @@ cmdLineOpts
          oDef        s   o =  case break (\c -> c == ':' || c == '=') s of
                                 (s1,(_:s2)) -> o {optDefs = (s1,s2) : optDefs o}
                                 _           -> o
-         oMarkCh     ms  o =  o {optMbMarkChange = fmap (viewSelsSelfT . fst . parseToResMsgs pViewSels . mkScan "") ms}
+         -- oMarkCh     ms  o =  o {optMbMarkChange = fmap (viewSelsSelfT . fst . parseToResMsgs pViewSels . mkScan "") ms}
+         oMarkCh     ms  o =  o {optMbMarkChange' = parseWithErr pViewSels viewSelsSelfT ms}
          -- oRlSel      ms  o =  o {optMbRlSel = fmap (rlSelSelfT . fst . parseToResMsgs pRlSel . mkScan "") ms}
-         oRlSel      ms  o =  o {optMbRlSel' = do 
-                                     s <- ms
-                                     let (r,e) = parseToResMsgs pRlSel $ mkScan "" s
-                                     return (rlSelSelfT r, map mkPPErr e)
-                                }
+         oRlSel      ms  o =  o {optMbRlSel' = parseWithErr pRlSel rlSelSelfT ms}
+         parseWithErr p upd ms = do 
+                          s <- ms
+                          let (r,e) = parseToResMsgs p $ mkScan "" s
+                          return (upd r, map mkPPErr e)
          yesno updO  ms  o =  case ms of
                                 Just "yes"  -> updO True o
                                 Just "no"   -> updO False o

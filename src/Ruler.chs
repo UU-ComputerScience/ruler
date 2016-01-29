@@ -255,6 +255,7 @@ main
   = do { args <- getArgs
        ; let oo@(o,n,errs)  = getOpt Permute cmdLineOpts args
              opts           = foldr ($) defaultOpts o
+             optParseErrs   = optErrs opts
        ; if optHelp opts
          then putStrLn (usageInfo ("version: " ++ versionInfo ++ "\n\nUsage ruler [options] [file]\n\noptions:") cmdLineOpts)
          else if optVersion opts || optSvnVersion opts
@@ -263,13 +264,21 @@ main
                          ++ (if optSvnVersion opts                       then versionSvn  else "")
                  ; putStr s
                  }
-         else if null errs
-              -- then  doCompile (if null n then emptyFPath else mkFPath (head n)) opts
-              then  compileTopLevel (if null n then emptyFPath else mkFPath (head n)) opts
-              else  do hPutStr stderr (head errs)
-                       exitFailure
+         else if not (null errs)
+         then do { hPutStr stderr (head errs)
+                 ; exitFailure
+                 }
+         else if not (null optParseErrs)
+         then do { sequence_ optParseErrs
+                 ; exitFailure
+                 }
+         else compileTopLevel (if null n then emptyFPath else mkFPath (head n)) opts
        }
-
+  where optErrs o = catMaybes $ map (uncurry extr) [("selrule", fmap snd . optMbRlSel')]
+          where extr msg fld = do
+                  e <- fld o
+                  if null e then Nothing else return $ do 
+                    hPutPPLn stderr $ "Option '" ++ msg ++ "' parsing errors" >-< indent 2 (ppErrPPL e)
 {-
 doCompile :: FPath -> Opts -> IO ()
 doCompile fp opts

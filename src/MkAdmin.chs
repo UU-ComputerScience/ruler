@@ -36,12 +36,12 @@ prevWRTDpd n g m v
 %%[1 hs
 data BldDtState
   = BldDtState
-      { bdDtAltGam     	:: DtAltGam
+      { bdDtAltGam      :: DtAltGam
       }
 
 emptyBldDtState
   = BldDtState
-      { bdDtAltGam     	= emptyGam
+      { bdDtAltGam      = emptyGam
       }
 
 bldDtInfo :: DpdGr Nm -> DtInfo -> (DtInfo,[Err])

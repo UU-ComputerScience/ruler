@@ -14,7 +14,10 @@
 %%[1 hs export (keywordsOpsExplainEsc, keywordsOpsParenEsc, keywordsOps)
 %%]
 
-%%[1 hs export (mkScan, mkHScan, mkOffScan)
+%%[1 hs export (mkScan', mkScan, mkHScan, mkOffScan)
+%%]
+
+%%[1111 hs export(patchScanOptsOption)
 %%]
 
 %%[1 hs export (pKeySPos, pNmStr, pNmStrSPos, pNmStrI, pNmStrISPos, pSymEscStr, pSymEscStrSPos, pSymStr, pSymStrSPos)
@@ -90,8 +93,19 @@ rulerScanOpts
       , scoOffsideClose  = ""
       }
 
+{-
+patchScanOptsOption o
+  = o { scoOpChars = Set.delete eq $ scoOpChars o
+      , scoSpecChars = Set.insert eq $ scoSpecChars o
+      }
+  where eq = '='
+-}
+
+mkScan' :: (ScanOpts -> ScanOpts) -> FilePath -> String -> [Token]
+mkScan' patch fn txt = scan (patch rulerScanOpts) (initPos fn) txt
+
 mkScan :: FilePath -> String -> [Token]
-mkScan fn txt = scan rulerScanOpts (initPos fn) txt
+mkScan = mkScan' id
 
 mkHScan :: FilePath -> Handle -> IO [Token]
 mkHScan fn fh

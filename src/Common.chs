@@ -101,11 +101,11 @@ instance PP WrKind where
 -- Names
 -------------------------------------------------------------------------
 
-strUnd   	= "_"
-strOverl 	= "_"
+strUnd      = "_"
+strOverl    = "_"
 strOverVec  = ">"
-strLhs   	= "lhs"
-strLoc   	= "loc"
+strLhs      = "lhs"
+strLoc      = "loc"
 
 nmOverl, nmOverVec, nmUnk, nmApp, nmWild, nmNone, nmEql, nmComma, nmOParen, nmCParen, nmLhs, nmAny, nmSp1 :: Nm
 nmOverl   = Nm strOverl

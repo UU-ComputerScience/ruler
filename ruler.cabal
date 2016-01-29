@@ -1,14 +1,14 @@
 Name:                ruler
-Version:             0.4.0.2
-Copyright:           Utrecht University, Department of Information and Computing Sciences, Software Technology group
+Version:             0.4.0.3
+Copyright:           Utrecht University, Department of Information and Computing Sciences, Software Technology group, Atze Dijkstra
 Description:         Ruler tool used by UHC (Utrecht Haskell Compiler)
 Synopsis:            Ruler tool for UHC
 Homepage:            https://github.com/UU-ComputerScience/ruler
 Bug-Reports:         https://github.com/UU-ComputerScience/ruler/issues
 License:             BSD3
 License-file:        LICENSE
-Author:              UHC Team
-Maintainer:          uhc-developers@lists.science.uu.nl
+Author:              Atze Dijkstra
+Maintainer:          atzedijkstra@gmail.com
 Category:            Development
 Build-Type:          Custom
 Cabal-Version:       >= 1.8

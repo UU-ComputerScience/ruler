@@ -5,14 +5,10 @@
 %%[1 hs module (Opts)
 %%]
 
-%%[1 hs export (Opts(..), defaultOpts, cmdLineOpts)
+%%[1 hs import (System.Console.GetOpt, UHC.Util.ParseUtils, Common, Err, ViewSel.ViewSel, ViewSel.Self, ViewSel.Parser)
 %%]
 
-%%[1 hs import (System.Console.GetOpt, UHC.Util.ParseUtils, Common, ViewSel.ViewSel, ViewSel.Self, ViewSel.Parser)
-%%]
-
-%%[1 hs
-
+%%[1 hs export (Opts(..), defaultOpts)
 -------------------------------------------------------------------------
 -- Options
 -------------------------------------------------------------------------
@@ -21,7 +17,7 @@ data Opts
   = Opts
       { optGenFM        :: FmKind
       , optGenExpl      :: Bool
-      , optGenV2		:: Bool
+      , optGenV2        :: Bool
       , optGenAGAttr    :: Bool
       , optGenAGData    :: Bool
       , optDot2Dash     :: Bool
@@ -37,10 +33,10 @@ data Opts
       , optFragWrap     :: Bool
       , optAGCopyElim   :: Bool
       , optMbMarkChange :: Maybe ViewSels
-      , optMbRlSel      :: Maybe RlSel
+      , optMbRlSel'     :: Maybe (RlSel,[Err])
       , optBaseNm       :: String
       , optSearchPath   :: [String]
-      , optDefs   		:: [(String,String)]
+      , optDefs         :: [(String,String)]
       }
       deriving Show
 
@@ -64,12 +60,18 @@ defaultOpts
       , optFragWrap     =  False
       , optAGCopyElim   =  True
       , optMbMarkChange =  Nothing
-      , optMbRlSel      =  Nothing
+      , optMbRlSel'     =  Nothing
       , optBaseNm       =  rulesCmdPre
       , optSearchPath   =  []
-      , optDefs			=  []
+      , optDefs         =  []
       }
+%%]
 
+%%[1 hs export(optMbRlSel)
+optMbRlSel = fmap fst . optMbRlSel'
+%%]
+
+%%[1 hs export(cmdLineOpts)
 cmdLineOpts  
   =  [ Option "a"  ["ag"]               (NoArg oGenAG)
           "generate code for AG, default=no"
@@ -145,7 +147,12 @@ cmdLineOpts
                                 (s1,(_:s2)) -> o {optDefs = (s1,s2) : optDefs o}
                                 _           -> o
          oMarkCh     ms  o =  o {optMbMarkChange = fmap (viewSelsSelfT . fst . parseToResMsgs pViewSels . mkScan "") ms}
-         oRlSel      ms  o =  o {optMbRlSel = fmap (rlSelSelfT . fst . parseToResMsgs pRlSel . mkScan "") ms}
+         -- oRlSel      ms  o =  o {optMbRlSel = fmap (rlSelSelfT . fst . parseToResMsgs pRlSel . mkScan "") ms}
+         oRlSel      ms  o =  o {optMbRlSel' = do 
+                                     s <- ms
+                                     let (r,e) = parseToResMsgs pRlSel $ mkScan "" s
+                                     return (rlSelSelfT r, map mkPPErr e)
+                                }
          yesno updO  ms  o =  case ms of
                                 Just "yes"  -> updO True o
                                 Just "no"   -> updO False o

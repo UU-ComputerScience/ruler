@@ -30,7 +30,7 @@
 -------------------------------------------------------------------------
 
 type RulerParser ep
-  = (IsParser (OffsideParser i o Token p) Token,InputState i Token p, OutputState o, Position p)
+  = forall i o p . (IsParser (OffsideParser i o Token p) Token,InputState i Token p, OutputState o, Position p)
       => OffsideParser i o Token p ep
 {-
 type RulerParser ep

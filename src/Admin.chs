@@ -58,9 +58,9 @@
 
 data DtFldInfo
   = DtFldInfo
-      { dfNm	:: Nm
-      , dfTy	:: Ty
-      , dfSeqNr	:: Int
+      { dfNm    :: Nm
+      , dfTy    :: Ty
+      , dfSeqNr :: Int
       }
 
 emptyDtFldInfo :: DtFldInfo
@@ -80,10 +80,10 @@ type DtFldGam = Gam Nm DtFldInfo
 
 data DtAltInfo
   = DtAltInfo
-      { daNm		:: Nm
-      , daRlNm		:: Nm
+      { daNm        :: Nm
+      , daRlNm      :: Nm
       , daMbOnNm    :: Maybe Nm
-      , daFldGam	:: DtFldGam
+      , daFldGam    :: DtFldGam
       }
 
 emptyDtAltInfo :: DtAltInfo
@@ -103,9 +103,9 @@ type DtAltGam = Gam Nm DtAltInfo
 
 data DtVwInfo
   = DtVwInfo
-      { vdNm			:: Nm
-      , vdAltGam		:: DtAltGam
-      , vdFullAltGam	:: DtAltGam
+      { vdNm            :: Nm
+      , vdAltGam        :: DtAltGam
+      , vdFullAltGam    :: DtAltGam
       }
 
 emptyDtVwInfo :: DtVwInfo
@@ -125,9 +125,9 @@ type DtVwGam = Gam Nm DtVwInfo
 
 data DtInfo
   = DtInfo
-      { dtNm		:: Nm
-      , dtScNmL		:: [Nm]
-      , dtVwGam		:: DtVwGam
+      { dtNm        :: Nm
+      , dtScNmL     :: [Nm]
+      , dtVwGam     :: DtVwGam
       }
 
 emptyDtInfo :: DtInfo
@@ -174,8 +174,8 @@ dtVwGamLookup = dblGamLookup dtVwGam
 
 data DtAltInvInfo
   = DtAltInvInfo
-      { daiNm		:: Nm
-      , daiAGNm		:: Nm
+      { daiNm       :: Nm
+      , daiAGNm     :: Nm
       , daiMbOnNm   :: Maybe Nm
       , daiChOrdGam :: ChOrdGam
       }
@@ -197,8 +197,8 @@ type DtAltInvGam = Gam Nm DtAltInvInfo
 
 data DtVwInvInfo
   = DtVwInvInfo
-      { vdiNm			:: Nm
-      , vdiFullAltGam	:: DtAltInvGam
+      { vdiNm           :: Nm
+      , vdiFullAltGam   :: DtAltInvGam
       }
 
 emptyDtVwInvInfo :: DtVwInvInfo
@@ -218,9 +218,9 @@ type DtVwInvGam = Gam Nm DtVwInvInfo
 
 data DtInvInfo
   = DtInvInfo
-      { dtiNm		:: Nm
-      , dtiAGNm		:: Nm
-      , dtiVwGam	:: DtVwInvGam
+      { dtiNm       :: Nm
+      , dtiAGNm     :: Nm
+      , dtiVwGam    :: DtVwInvGam
       }
 
 emptyDtInvInfo :: DtInvInfo
@@ -370,8 +370,8 @@ sabrGamRename rnL g
 
 data BldRename
   = BldRename
-      { brNmFrom 	:: Nm
-      , brNmTo 		:: Nm
+      { brNmFrom    :: Nm
+      , brNmTo      :: Nm
       }
 
 instance Show BldRename where
@@ -633,15 +633,15 @@ rcGamUnionShadow = gamUnionWith gamUnionShadow
 
 data RlJdBld e
   = RlJdBldDirect
-      { rjbExtNmS   	:: Set.Set Nm
-      , rjbPreGam   	:: REGam e
-      , rjbPostGam  	:: REGam e
+      { rjbExtNmS       :: Set.Set Nm
+      , rjbPreGam       :: REGam e
+      , rjbPostGam      :: REGam e
       }
   | RlJdBldFromRuleset
-      { rjbPos      	:: SPos
-      , rjbRsNm     	:: Nm
-      , rjbRlNm     	:: Nm
-      , rjbScRenameL	:: [BldRename]
+      { rjbPos          :: SPos
+      , rjbRsNm         :: Nm
+      , rjbRlNm         :: Nm
+      , rjbScRenameL    :: [BldRename]
       }
 
 instance Show (RlJdBld e) where
@@ -657,14 +657,14 @@ instance PP e => PP (RlJdBld e) where
 
 data VwRlInfo e
   = VwRlInfo
-      { vwrlNm                              				:: Nm
-      , vwrlPos                             				:: SPos
-      , vwrlJdBldL                          				:: [RlJdBld e]
-      , vwrlJdBldOnAL, vwrlJdBldOnBL              			:: [RlJdBld e]	-- for debug
-      , vwrlFullNoDfltPreGam, vwrlFullNoDfltPostGam     	:: REGam e
-      , vwrlFullPreGam, vwrlFullPostGam     				:: REGam e
-      , vwrlPreScc                          				:: [[Nm]]
-      , vwrlMbChGam                         				:: Maybe RlChGam
+      { vwrlNm                                              :: Nm
+      , vwrlPos                                             :: SPos
+      , vwrlJdBldL                                          :: [RlJdBld e]
+      , vwrlJdBldOnAL, vwrlJdBldOnBL                        :: [RlJdBld e]  -- for debug
+      , vwrlFullNoDfltPreGam, vwrlFullNoDfltPostGam         :: REGam e
+      , vwrlFullPreGam, vwrlFullPostGam                     :: REGam e
+      , vwrlPreScc                                          :: [[Nm]]
+      , vwrlMbChGam                                         :: Maybe RlChGam
       , vwrlAuxGroups                                       :: [[Nm]]
       }
 

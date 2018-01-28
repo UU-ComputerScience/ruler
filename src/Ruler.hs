@@ -1,39 +1,40 @@
--------------------------------------------------------------------------
--- Main
--------------------------------------------------------------------------
+module Main (main) where
 
-%%[1 hs module(Main)
-%%]
+import System.IO
+import System.Environment
+import System.Exit
+import Control.Monad.State
+import qualified Data.Map as Map
 
-%%[1 hs import (System.IO, System.Environment, System.Exit, Control.Monad.State, qualified Data.Map as Map)
-%%]
+import System.Console.GetOpt
+import UHC.Util.Pretty
+import UHC.Util.Utils( panicJust )
 
-%%[1 hs import (System.Console.GetOpt, UHC.Util.Pretty, UHC.Util.Utils( panicJust ))
-%%]
+import UHC.Util.ParseUtils
+import UHC.Util.ParseErrPrettyPrint
+import UHC.Util.CompileRun
 
-%%[1 hs import (UHC.Util.ParseUtils, UHC.Util.ParseErrPrettyPrint, UHC.Util.CompileRun)
-%%]
+import Version
+import Err
+import Gam( emptyGam )
+import Common
+import Opts
 
-%%[1 hs import (Version, Err, Gam( emptyGam ), Common, Opts)
-%%]
+import qualified AbsSyn.AbsSyn1 as AS1
 
-%%[1 hs import (qualified AbsSyn.AbsSyn1 as AS1)
-%%]
+import qualified Main1AG as M1
 
-%%[1 hs import (qualified Main1AG as M1)
-%%]
+import qualified Main2AG as M2
 
-%%[1 hs import (qualified Main2AG as M2)
-%%]
+import AS1.Imports
+import TrfAS2.GenARule
+import TrfAS2.GenLaTeX
+import KeywParser
 
-%%[1 hs import (AS1.Imports, TrfAS2.GenARule, TrfAS2.GenLaTeX, KeywParser)
-%%]
+import Parser
+import Expr.Expr
+import FmGam
 
-%%[1 hs import (Parser, Expr.Expr, FmGam)
-%%]
-
-
-%%[1 hs
 
 -------------------------------------------------------------------------
 -- Compile run state
@@ -344,4 +345,4 @@ doCompile fp opts
         putErr        = putErr' (return ())
 -}
 
-%%]
+
